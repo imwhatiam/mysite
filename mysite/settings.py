@@ -20,11 +20,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'y)&=n-h8)&pg9%tdj6y8(u@8j$lh9_w8()j8o(0pi$@q*07cjg'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -108,3 +108,9 @@ TEMPLATE_LOADERS = (
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates').replace('\\','/'),
 )
+
+# Load local_settings.py
+try:
+    from local_settings import *
+except ImportError:
+    pass

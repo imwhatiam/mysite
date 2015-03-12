@@ -3,3 +3,4 @@
 *#
 logs/
 mysite.pid
+mysite/local_settings.py
