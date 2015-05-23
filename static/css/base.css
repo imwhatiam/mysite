@@ -1,0 +1,32 @@
+/*!
+ * Start Bootstrap - Blog Home HTML Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+body {
+    padding-top: 70px;
+    background-color: #c7edcc;
+}
+
+footer {
+    margin: 50px 0;
+}
+
+.well {
+    background-color: #c7edcc;
+}
+.navbar-search {
+    float: right;
+    margin-top: 8px;
+    width: 360px;
+}
+.navbar-inverse {
+    background-color: #008b8b;
+}
+.navbar-inverse .navbar-brand {
+    color: #fff;
+}
+.publish-time {
+    color: #c71585;
+}
