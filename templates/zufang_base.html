@@ -12,9 +12,15 @@
     <link href="{% static "css/base.css"%}" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <h2>Contextual Classes</h2>
-        <p>Contextual classes can be used to color table rows or table cells. The classes that can be used are: .active, .success, .info, .warning, and .danger.</p>
+    <div id="zufang" class="container">
+        <form class="form-inline">
+            <div class="form-group">
+                <input id="search-input" class="form-control">
+            </div>
+            <button id="search-submit" type="submit" class="btn btn-default">Search</button>
+            <button id="show-all" type="submit" class="btn btn-default">Show All</button>
+        </form>
+
         <table id="zufang-table" class="table">
             <thead>
                 <tr>
