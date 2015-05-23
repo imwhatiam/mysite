@@ -1,7 +1,7 @@
 # Create your views here.
 import json
 import sqlite3
-import MySQLdb
+import MySQLdb, MySQLdb.cursors
 
 from functools import wraps
 from rest_framework.views import APIView
