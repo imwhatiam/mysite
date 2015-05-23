@@ -1,10 +1,13 @@
 # Create your views here.
 import json
 import sqlite3
+import MySQLdb
 
 from functools import wraps
 from rest_framework.views import APIView
 from django.http import HttpResponse
+
+from mysite.settings import MYSQL_INFO
 
 JSON_CONTENT_TYPE = 'application/json; charset=utf-8'
 def json_response(func):
@@ -26,7 +29,16 @@ class ZufangItems(APIView):
     def get(self, request, format=None):
 
         items = []
-        con = sqlite3.connect('/home/lian/zufang.db')
+        #con = sqlite3.connect('/home/lian/zufang.db')
+        con = MySQLdb.connect(
+                host = MYSQL_INFO['host'],
+                port = 3306,
+                user = MYSQL_INFO['user'],
+                passwd = MYSQL_INFO['passwd'],
+                db = 'mysite',
+                charset = 'utf8',
+                cursorclass = MySQLdb.cursors.DictCursor
+            )
 
         with con:
             con.row_factory = sqlite3.Row
@@ -43,4 +55,3 @@ class ZufangItems(APIView):
                 items.append(item)
 
         return items
-
