@@ -15,8 +15,8 @@
     <div id="zufang" class="container">
 
         <div id="access-count">
-            <p>Your IP is loading</p>
-            <p>Total loading visits, you visit loading times</p>
+            <p>loading</p>
+            <p>loading</p>
         </div>
 
         <form class="form-inline">
@@ -54,7 +54,7 @@
     </script>
     <script type="text/template" id="access-count-tmpl">
         <p>Your IP is  <%= ip %></p>
-        <p>Total <%= total_times %> visits, you visit <%= my_times %> times</p>
+        <p>Total <%= total_visitors %> people <%= total_times %> visits, you visit <%= my_times %> times</p>
     </script>
     <script data-main="{% static "js/main" %}" src="{% static "js/lib/require.js" %}"></script>
 </body>

@@ -93,14 +93,21 @@ class ZufangAccessCount(APIView):
         ip = get_client_ip(request)
         with con:
             cur = con.cursor()
+
             cur.execute("SELECT times FROM zufang_access_count WHERE ip=%d" % ip2long(ip))
             my_times = cur.fetchone()
+
             cur.execute("SELECT SUM(times) FROM zufang_access_count;")
             total_times = cur.fetchone()
+
+            cur.execute("SELECT COUNT(ip) FROM zufang_access_count;")
+            total_visitors = cur.fetchone()
+
             item = {
                 'ip': ip,
                 'my_times': my_times['times'],
                 'total_times': int(total_times['SUM(times)']),
+                'total_visitors': int(total_visitors['COUNT(ip)']),
             }
 
         return item
