@@ -11,6 +11,8 @@ define([
 
         el: $('#zufang'),
 
+        accessCountTemplate: _.template($('#zufang-access-count-tmpl').html()),
+
         initialize: function() {
             console.log('zufang_app/view/app-view.js: app-view init');
             this.$tableBody = this.$('tbody');
@@ -18,12 +20,23 @@ define([
             this.collection = new Collection();
             this.listenTo(this.collection, 'reset', this.reset);
             this.collection.fetch({reset: true});
+            this.getAccessCount();
         },
 
         events: {
             'click #search-submit': 'inputSearch',
             'click .direct-search': 'directSearch',
             'click #show-all': 'reset'
+        },
+
+        getAccessCount: function() {
+            var _this = this;
+            $.ajax({
+                url: '/api/zufang-access-count/',
+                success: function(data) {
+                    _this.$el.prepend(_this.accessCountTemplate(data));
+                }
+            });
         },
 
         directSearch: function(e) {

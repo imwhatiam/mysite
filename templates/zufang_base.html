@@ -46,6 +46,10 @@
         <td><a href="<%= url %>" target=_blank><%- title %></a></td>
         <td><%- reply_time %></td>
     </script>
+    <script type="text/template" id="zufang-access-count-tmpl">
+        <p>Your IP is  <%= ip %></p>
+        <p>Total <%= total_times %> visits, you visit <%= my_times %> times</p>
+    </script>
     <script data-main="{% static "js/main" %}" src="{% static "js/lib/require.js" %}"></script>
 </body>
 </html>
