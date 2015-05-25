@@ -2,6 +2,8 @@
 *~
 *#
 logs/
+start.sh
+restart.sh
 mysite.pid
 mysite/local_settings.py
 runserver.sh
