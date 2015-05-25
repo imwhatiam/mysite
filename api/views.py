@@ -41,7 +41,7 @@ class ZufangItems(APIView):
             )
 
         with con:
-            con.row_factory = sqlite3.Row
+            #con.row_factory = sqlite3.Row
             cur = con.cursor()
             cur.execute("SELECT * FROM zufang ORDER BY timestamp DESC LIMIT 250")
             rows = cur.fetchall()
