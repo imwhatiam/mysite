@@ -21,13 +21,23 @@ define([
         },
 
         events: {
-            'click #search-submit': 'search',
+            'click #search-submit': 'inputSearch',
+            'click .direct-search': 'directSearch',
             'click #show-all': 'reset'
         },
 
-        search: function() {
-            var value = $('#search-input').val(),
-                _this = this,
+        directSearch: function(e) {
+            var value = $(e.currentTarget).text();
+            this.search(value);
+        },
+
+        inputSearch: function() {
+            var value = $('#search-input').val();
+            this.search(value);
+        },
+
+        search: function(value) {
+            var _this = this,
                 result = [];
 
             this.collection.each(function (model) {
