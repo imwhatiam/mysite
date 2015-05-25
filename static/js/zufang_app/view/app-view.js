@@ -11,11 +11,12 @@ define([
 
         el: $('#zufang'),
 
-        accessCountTemplate: _.template($('#zufang-access-count-tmpl').html()),
+        accessCountTemplate: _.template($('#access-count-tmpl').html()),
 
         initialize: function() {
             console.log('zufang_app/view/app-view.js: app-view init');
             this.$tableBody = this.$('tbody');
+            this.$accessCount = this.$('#access-count');
 
             this.collection = new Collection();
             this.listenTo(this.collection, 'reset', this.reset);
@@ -34,7 +35,7 @@ define([
             $.ajax({
                 url: '/api/zufang-access-count/',
                 success: function(data) {
-                    _this.$el.prepend(_this.accessCountTemplate(data));
+                    _this.$accessCount.html(_this.accessCountTemplate(data));
                 }
             });
         },
