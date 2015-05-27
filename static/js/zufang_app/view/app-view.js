@@ -26,8 +26,8 @@ define([
 
         events: {
             'click #search-submit': 'inputSearch',
-            'click .direct-search': 'directSearch',
-            'click #show-all': 'reset'
+            'click #show-all': 'reset',
+            'click .direct-search': 'directSearch'
         },
 
         getAccessCount: function() {
@@ -43,11 +43,13 @@ define([
         directSearch: function(e) {
             var value = $(e.currentTarget).text();
             this.search(value);
+            return false
         },
 
         inputSearch: function() {
             var value = $('#search-input').val();
             this.search(value);
+            return false
         },
 
         search: function(value) {
