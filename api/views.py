@@ -59,7 +59,7 @@ class ZufangItems(APIView):
         with con:
             #con.row_factory = sqlite3.Row
             cur = con.cursor()
-            cur.execute("SELECT * FROM zufang ORDER BY timestamp DESC LIMIT 500")
+            cur.execute("SELECT * FROM %s ORDER BY timestamp DESC LIMIT 500" % MYSQL_INFO['topic_table'])
             rows = cur.fetchall()
 
             for row in rows:
