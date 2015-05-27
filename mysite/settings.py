@@ -59,6 +59,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
+PROJECT_ROOT = os.path.join(os.path.dirname(__file__), os.pardir)
 
 DATABASES = {
     'default': {
