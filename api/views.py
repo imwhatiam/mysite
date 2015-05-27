@@ -1,6 +1,6 @@
 # Create your views here.
 import json
-import sqlite3
+#import sqlite3
 import socket, struct
 import MySQLdb, MySQLdb.cursors
 
@@ -59,7 +59,7 @@ class ZufangItems(APIView):
         with con:
             #con.row_factory = sqlite3.Row
             cur = con.cursor()
-            cur.execute("SELECT * FROM zufang ORDER BY timestamp DESC LIMIT 250")
+            cur.execute("SELECT * FROM zufang ORDER BY timestamp DESC LIMIT 500")
             rows = cur.fetchall()
 
             for row in rows:
@@ -78,8 +78,6 @@ class ZufangAccessCount(APIView):
     """
     @json_response
     def get(self, request, format=None):
-
-        items = []
         con = MySQLdb.connect(
                 host = MYSQL_INFO['host'],
                 port = 3306,
