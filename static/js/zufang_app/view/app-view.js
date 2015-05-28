@@ -57,7 +57,7 @@ define([
                 result = [];
 
             this.collection.each(function (model) {
-                var title = model.get('title');
+                var title = model.get('topic_title');
                 if (title.indexOf(value) > -1) {
                     result.push(model);
                 }
