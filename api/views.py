@@ -59,14 +59,21 @@ class ZufangItems(APIView):
         with con:
             #con.row_factory = sqlite3.Row
             cur = con.cursor()
-            cur.execute("SELECT * FROM %s ORDER BY timestamp DESC LIMIT 500" % MYSQL_INFO['topic_table'])
+            cur.execute("SELECT a.id, a.title, a.reply_time, a.timestamp, b.user_id, b.user_name \
+                FROM %s a, %s b \
+                WHERE a.id = b.topic_id \
+                ORDER BY a.timestamp DESC LIMIT 500 " %
+                (MYSQL_INFO['topic_table'], MYSQL_INFO['user_table'] ))
+
             rows = cur.fetchall()
 
             for row in rows:
                 item = {
-                    'title': row["title"],
-                    'url': row["url"],
+                    'topic_id': row["id"],
+                    'topic_title': row["title"],
                     'reply_time': row["reply_time"],
+                    'user_id': row["user_id"],
+                    'user_name': row["user_name"],
                 }
                 items.append(item)
 
