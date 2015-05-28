@@ -15,3 +15,8 @@ body {
 .direct-search {
     margin-top: 10px;
 }
+.good-topic-btn,
+.bad-topic-btn,
+.bad-user-btn {
+    padding: 2px;
+}
