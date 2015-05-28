@@ -5,32 +5,13 @@
  */
 
 body {
-    padding-top: 70px;
+    padding-top: 20px;
     background-color: #c7edcc;
-}
-
-footer {
-    margin: 50px 0;
 }
 
 .well {
     background-color: #c7edcc;
 }
-.navbar-search {
-    float: right;
-    margin-top: 8px;
-    width: 360px;
-}
-.navbar-inverse {
-    background-color: #008b8b;
-}
-.navbar-inverse .navbar-brand {
-    color: #fff;
-}
-.publish-time {
-    color: #c71585;
-}
-
 .direct-search {
     margin-top: 10px;
 }
