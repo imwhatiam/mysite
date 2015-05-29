@@ -5,6 +5,7 @@
 <head>
   <meta charset="utf-8">
   <title>Backbone.js Todos</title>
+  <link href="{% static 'css/bootstrap.min.css'%}" rel="stylesheet">
   <link href="{% static 'css/todos.css'%}" rel="stylesheet">
   <script type="text/javascript">
 
@@ -43,16 +44,16 @@
     </footer>
 
   </div>
-
-  <div id="instructions">
-    Double-click to edit a todo.
+  <div class="like">
+      <span class="glyphicon glyphicon-thumbs-up"></span>
+      <span>12</span>
   </div>
 
-  <script src="{% static 'js/jquery-2.1.3.js' %}"></script>
-  <script src="{% static 'js/underscore-1.7.0.js' %}"></script>
-  <script src="{% static 'js/backbone-1.1.2.js' %}"></script>
-  <script src="{% static 'js/backbone.localStorage.js' %}"></script>
-  <script src="{% static 'js/todos.js' %}"></script>
+  <script src="{% static 'js/lib/jquery-2.1.3.js' %}"></script>
+  <script src="{% static 'js/lib/underscore-1.7.0.js' %}"></script>
+  <script src="{% static 'js/lib/backbone-1.1.2.js' %}"></script>
+  <script src="{% static 'js/lib/backbone.localStorage.js' %}"></script>
+  <script src="{% static 'js/todo_app/todos.js' %}"></script>
 
   <!-- Templates -->
 

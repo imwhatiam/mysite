@@ -198,3 +198,9 @@ body {
 #instructions a {
 	color: #336699;
 }
+.glyphicon-thumbs-up {
+    padding-top: 9px;
+}
+.like {
+    cursor:pointer;
+}

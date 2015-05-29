@@ -12,11 +12,16 @@ body {
 .well {
     background-color: #c7edcc;
 }
+
 .direct-search {
     margin-top: 10px;
 }
-.good-topic-btn,
-.bad-topic-btn,
-.bad-user-btn {
-    padding: 2px;
+
+.not-like,
+.like {
+    cursor:pointer;
+}
+.not-like:hover,
+.like:hover {
+    font-color: red;
 }

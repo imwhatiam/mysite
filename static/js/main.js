@@ -13,7 +13,7 @@ require.config({
     paths: {
         backbone: 'lib/backbone-1.1.2',
         underscore: 'lib/underscore-1.7.0',
-        bootstrap: 'lib/bootstrap',
+        bootstrap: 'lib/bootstrap.min',
         jquery: 'lib/jquery-2.1.3'
     }
 });
