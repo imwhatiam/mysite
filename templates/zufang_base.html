@@ -13,6 +13,11 @@
 </head>
 <body>
     <div id="zufang" class="container">
+        <div id="notice">
+            <span>点赞的功能现在还不能用；如果不能搜索，清空浏览器缓存。</span>
+        </div>
+
+        <hr>
 
         <div id="access-count">
             <p>loading</p>
@@ -23,54 +28,41 @@
             <div class="form-group">
                 <input id="search-input" class="form-control">
             </div>
-            <button id="search-submit" type="button" class="btn btn-info">
-              <span class="glyphicon glyphicon-search"></span> Search
-            </button>
-            <button id="show-all" type="button" class="btn btn-success">
-              <span class="glyphicon glyphicon-search"></span> Show All
-            </button>
+            <button id="search-submit" class="btn btn-info">Search</button>
+            <button id="show-all" class="btn btn-success">Show All</button>
+
+            <span class="glyphicon glyphicon-option-vertical"></span>
+
+            <button class="btn btn-info direct-search">知春</button>
+            <button class="btn btn-info direct-search">土城</button>
+            <button class="btn btn-info direct-search">牡丹园</button>
+            <button class="btn btn-info direct-search">上地</button>
+            <button class="btn btn-info direct-search">龙泽</button>
+            <button class="btn btn-info direct-search">西二旗</button>
+            <button class="btn btn-info direct-search">回龙观</button>
         </form>
-
-        <button class="btn btn-info direct-search">知春</button>
-        <button class="btn btn-info direct-search">土城</button>
-        <button class="btn btn-info direct-search">牡丹园</button>
-        <button class="btn btn-info direct-search">上地</button>
-        <button class="btn btn-info direct-search">龙泽</button>
-        <button class="btn btn-info direct-search">西二旗</button>
-        <button class="btn btn-info direct-search">回龙观</button>
-        <button class="btn btn-info direct-search">国贸</button>
-        <button class="btn btn-info direct-search">四惠</button>
-        <button class="btn btn-info direct-search">传媒</button>
-
         <table id="zufang-table" class="table">
             <thead>
                 <tr>
-                    <th width="5%"></th>
                     <th width="65%">Title</th>
-                    <th width="5%"></th>
-                    <th width="10%">Author</th>
+                    <th width="15%">Author</th>
                     <th width="15%">Last Reply Time</th>
+                    <th width="5%"></th>
                 </tr>
             </thead>
             <tbody></tbody>
         </table>
     </div>
     <script type="text/template" id="zufang-item-tmpl">
+        <td><a href="http://www.douban.com/group/topic/<%= topic_id %>/" target=_blank><%- topic_title %></a></td>
+        <td><a href="http://www.douban.com/group/people/<%= user_id %>/" target=_blank><%- user_name %></a></td>
+        <td><%- reply_time %></td>
         <td>
             <span class="like">
                 <span class="glyphicon glyphicon-thumbs-up"></span>
                 <span>12</span>
             </span>
         </td>
-        <td><a href="http://www.douban.com/group/topic/<%= topic_id %>/" target=_blank><%- topic_title %></a></td>
-        <td>
-            <div class="not-like">
-                <span class="glyphicon glyphicon-thumbs-down"></span>
-                <span>12</span>
-            </div>
-        </td>
-        <td><a href="http://www.douban.com/group/people/<%= user_id %>/" target=_blank><%- user_name %></a></td>
-        <td><%- reply_time %></td>
     </script>
     <script type="text/template" id="access-count-tmpl">
         <p>Your IP is  <%= ip %></p>

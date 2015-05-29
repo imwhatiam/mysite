@@ -13,10 +13,6 @@ body {
     background-color: #c7edcc;
 }
 
-.direct-search {
-    margin-top: 10px;
-}
-
 .not-like,
 .like {
     cursor:pointer;
