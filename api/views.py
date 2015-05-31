@@ -64,7 +64,7 @@ class ZufangItems(APIView):
                 FROM %s a, %s b \
                 WHERE a.id = b.topic_id \
                 ORDER BY a.timestamp DESC LIMIT 500" %
-                MYSQL_INFO['topic_table'], MYSQL_INFO['user_table'] ))
+                (MYSQL_INFO['topic_table'], MYSQL_INFO['user_table']))
 
             rows = cur.fetchall()
 
