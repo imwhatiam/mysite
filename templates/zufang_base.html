@@ -14,17 +14,17 @@
 <body>
     <div id="zufang" class="container">
         <div id="notice">
-            <span>点赞的功能现在还不能用；如果不能搜索，清空浏览器缓存。</span>
+            <p>如果不能搜索，清空浏览器缓存</p>
+            <p>以后会加上“取消赞”的功能</p>
         </div>
 
         <hr>
 
         <div id="access-count">
             <p>loading</p>
-            <p>loading</p>
         </div>
 
-        <form class="form-inline">
+        <form id="search-topic" class="form-inline">
             <div class="form-group">
                 <input id="search-input" class="form-control">
             </div>
@@ -54,19 +54,18 @@
         </table>
     </div>
     <script type="text/template" id="zufang-item-tmpl">
-        <td><a href="http://www.douban.com/group/topic/<%= topic_id %>/" target=_blank><%- topic_title %></a></td>
+        <td><a href="http://www.douban.com/group/topic/<%= id %>/" target=_blank><%- topic_title %></a></td>
         <td><a href="http://www.douban.com/group/people/<%= user_id %>/" target=_blank><%- user_name %></a></td>
         <td><%- reply_time %></td>
         <td>
             <span class="like">
                 <span class="glyphicon glyphicon-thumbs-up"></span>
-                <span>12</span>
+                <span><%- likes %></span>
             </span>
         </td>
     </script>
     <script type="text/template" id="access-count-tmpl">
-        <p>Your IP is  <%= ip %></p>
-        <p>Total <%= total_visitors %> people <%= total_times %> visits, you visit <%= my_times %> times</p>
+        <p>Your IP is  <%= ip %>, Total <%= total_visitors %> people <%= total_times %> visits, you visit <%= my_times %> times</p>
     </script>
     <script data-main="{% static "js/main" %}" src="{% static "js/lib/require.js" %}"></script>
 </body>
