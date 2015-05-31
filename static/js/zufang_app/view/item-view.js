@@ -23,13 +23,30 @@ define([
             this.model.save(null, {
                 success: function (data) {
                     if (_this.model.get('like_success')) {
-                        alert('Success');
+                        _this.feedback('Success', 'success');
                     } else {
-                        alert('Already like this');
+                        _this.feedback('Already like this', 'error');
                     }
                 }
             });
         },
+
+        feedback: function(con, type) {
+            var time = 5000;
+
+            if ($('#messages').length > 0) {
+                $('#messages').html('<span class="' + type + '">' + con + '</span>');
+            } else {
+                var html = '<div id="messages"><span class="' + type + '">' + con + '</span></div>';
+                $('#zufang').append(html);
+            }
+
+            console.log($(window).width())
+            console.log($('#messages').width())
+            $('#messages').css({'left':($(window).width() - $('#messages').width())/2, 'top':10}).removeClass('hide');
+            setTimeout(function() { $('#messages').addClass('hide'); }, time);
+        },
+
 
         render: function () {
             this.$el.html(this.template(this.model.toJSON()));
