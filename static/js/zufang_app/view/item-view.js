@@ -41,8 +41,6 @@ define([
                 $('#zufang').append(html);
             }
 
-            console.log($(window).width())
-            console.log($('#messages').width())
             $('#messages').css({'left':($(window).width() - $('#messages').width())/2, 'top':10}).removeClass('hide');
             setTimeout(function() { $('#messages').addClass('hide'); }, time);
         },

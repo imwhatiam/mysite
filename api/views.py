@@ -14,11 +14,10 @@ class ZufangItems(APIView):
         items = []
         con = MySQLdb_con()
         with con:
-            #con.row_factory = sqlite3.Row
             cur = con.cursor()
 
-            cur.execute("SELECT a.id, a.title, a.reply_time, a.timestamp, a.likes, b.id, b.user_name \
-                FROM %s a, %s b \
+            cur.execute("SELECT a.id, a.title, a.reply_time, a.timestamp, \
+                a.likes, b.id, b.user_name FROM %s a, %s b \
                 WHERE a.id = b.topic_id \
                 ORDER BY a.timestamp DESC LIMIT 500" %
                 (MYSQL_INFO['topic_table'], MYSQL_INFO['user_table']))
@@ -45,33 +44,37 @@ class ZufangItem(APIView):
     @json_response
     def put(self, request, topic_id, format=None):
 
+        topic_id = int(topic_id)
+
         ip = get_client_ip(request)
+        ip_2_long = ip2long(ip)
+
         con = MySQLdb_con()
         with con:
             cur = con.cursor()
-            ip = int(ip2long(ip))
 
             cur.execute("SELECT COUNT(ip) FROM %s where id=%d;" %
-                    (MYSQL_INFO['topic_like_table'], int(topic_id)))
-            ver = cur.fetchone()
+                    (MYSQL_INFO['topic_like_table'], topic_id))
+            row = cur.fetchone()
             result = {
-                'likes': int(ver['COUNT(ip)']),
+                'likes': int(row['COUNT(ip)']),
             }
 
             cur.execute("SELECT COUNT(*) FROM %s where id=%d AND ip=%d;" %
-                    (MYSQL_INFO['topic_like_table'], int(topic_id), ip))
-            ver = cur.fetchone()
-            if int(ver['COUNT(*)']) > 0:
+                    (MYSQL_INFO['topic_like_table'], topic_id, ip_2_long))
+            row = cur.fetchone()
+
+            if int(row['COUNT(*)']) > 0:
                 result['like_success'] = False
             else:
                 cur.execute("INSERT INTO %s VALUES (%d, %d)" %
-                        (MYSQL_INFO['topic_like_table'], int(topic_id), ip))
+                        (MYSQL_INFO['topic_like_table'], topic_id, ip_2_long))
 
                 result['like_success'] = True
                 result['likes'] = result['likes'] + 1
 
             cur.execute("UPDATE %s SET likes=%d WHERE id=%d" %
-                    (MYSQL_INFO['topic_table'], result['likes'], int(topic_id)))
+                    (MYSQL_INFO['topic_table'], result['likes'], topic_id))
 
         return result
 
@@ -81,19 +84,24 @@ class ZufangAccessCount(APIView):
     """
     @json_response
     def get(self, request, format=None):
+
         ip = get_client_ip(request)
+        ip_2_long = ip2long(ip)
+
         con = MySQLdb_con()
         with con:
             cur = con.cursor()
 
             cur.execute("SELECT times FROM %s WHERE ip=%d" %
-                    (MYSQL_INFO['access_count_table'], ip2long(ip)))
+                    (MYSQL_INFO['access_count_table'], ip_2_long))
             my_times = cur.fetchone()
 
-            cur.execute("SELECT SUM(times) FROM %s;" % MYSQL_INFO['access_count_table'])
+            cur.execute("SELECT SUM(times) FROM %s;" %
+                    MYSQL_INFO['access_count_table'])
             total_times = cur.fetchone()
 
-            cur.execute("SELECT COUNT(ip) FROM %s;" % MYSQL_INFO['access_count_table'])
+            cur.execute("SELECT COUNT(ip) FROM %s;" %
+                    MYSQL_INFO['access_count_table'])
             total_visitors = cur.fetchone()
 
             item = {
