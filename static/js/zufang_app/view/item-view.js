@@ -53,6 +53,22 @@ define([
                 hour = d.getHours(),
                 minute = d.getMinutes();
 
+            if (month < 10) {
+                month = '0' + month;
+            }
+
+            if (day < 10) {
+                day = '0' + day;
+            }
+
+            if (hour < 10) {
+                hour = '0' + hour;
+            }
+
+            if (minute < 10) {
+                minute = '0' + minute;
+            }
+
             return year + '-' + month + '-' + day + ' ' + hour + ':' + minute;
         },
 
