@@ -45,9 +45,23 @@ define([
             setTimeout(function() { $('#messages').addClass('hide'); }, time);
         },
 
+        getLocalTime: function(timestamp) {
+            var d = new Date(timestamp * 1000),
+                year = d.getFullYear(),
+                month = d.getMonth() + 1,
+                day = d.getDay(),
+                hour = d.getHours(),
+                minute = d.getMinutes();
+
+            return year + '-' + month + '-' + day + ' ' + hour + ':' + minute;
+        },
 
         render: function () {
-            this.$el.html(this.template(this.model.toJSON()));
+            var data = this.model.toJSON();
+
+            data['reply_time'] = this.getLocalTime(data['timestamp']);
+
+            this.$el.html(this.template(data));
             return this;
         }
     });

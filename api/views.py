@@ -16,10 +16,10 @@ class ZufangItems(APIView):
         with con:
             cur = con.cursor()
 
-            cur.execute("SELECT a.id, a.title, a.reply_time, a.timestamp, \
-                a.likes, b.id, b.user_name FROM %s a, %s b \
-                WHERE a.id = b.topic_id \
-                ORDER BY a.timestamp DESC LIMIT 500" %
+            cur.execute("SELECT a.id, a.title, a.timestamp, a.likes, b.id, b.user_name \
+                         FROM %s a, %s b \
+                         WHERE a.id = b.topic_id \
+                         ORDER BY a.timestamp DESC LIMIT 500" %
                 (MYSQL_INFO['topic_table'], MYSQL_INFO['user_table']))
 
             rows = cur.fetchall()
@@ -28,7 +28,7 @@ class ZufangItems(APIView):
                 item = {
                     'id': row["id"],
                     'topic_title': row["title"],
-                    'reply_time': row["reply_time"],
+                    'timestamp': row["timestamp"],
                     'user_id': row["id"],
                     'user_name': row["user_name"],
                     'likes': int(row['likes']),
