@@ -1,41 +1,8 @@
-# Create your views here.
-import json
-#import sqlite3
-import socket, struct
-import MySQLdb, MySQLdb.cursors
-
-from functools import wraps
 from rest_framework.views import APIView
-from django.http import HttpResponse
 
+from mysite.utils import get_client_ip, ip2long, json_response, \
+        MySQLdb_con
 from mysite.settings import MYSQL_INFO
-
-JSON_CONTENT_TYPE = 'application/json; charset=utf-8'
-def get_client_ip(request):
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    if x_forwarded_for:
-        ip = x_forwarded_for.split(',')[0]
-    else:
-        ip = request.META.get('REMOTE_ADDR')
-    return ip
-
-def ip2long(ip):
-    """
-    Convert an IP string to long
-    """
-    packedIP = socket.inet_aton(ip)
-    return struct.unpack("!L", packedIP)[0]
-
-def json_response(func):
-    @wraps(func)
-    def wrapped(*a, **kw):
-        result = func(*a, **kw)
-        if isinstance(result, HttpResponse):
-            return result
-        else:
-            return HttpResponse(json.dumps(result), status=200,
-                                content_type=JSON_CONTENT_TYPE)
-    return wrapped
 
 class ZufangItems(APIView):
     """
@@ -45,17 +12,7 @@ class ZufangItems(APIView):
     def get(self, request, format=None):
 
         items = []
-        #con = sqlite3.connect('/home/lian/zufang.db')
-        con = MySQLdb.connect(
-                host = MYSQL_INFO['host'],
-                port = 3306,
-                user = MYSQL_INFO['user'],
-                passwd = MYSQL_INFO['passwd'],
-                db = 'mysite',
-                charset = 'utf8',
-                cursorclass = MySQLdb.cursors.DictCursor
-            )
-
+        con = MySQLdb_con()
         with con:
             #con.row_factory = sqlite3.Row
             cur = con.cursor()
@@ -89,38 +46,33 @@ class ZufangItem(APIView):
     def put(self, request, topic_id, format=None):
 
         ip = get_client_ip(request)
-
-        con = MySQLdb.connect(
-                host = MYSQL_INFO['host'],
-                port = 3306,
-                user = MYSQL_INFO['user'],
-                passwd = MYSQL_INFO['passwd'],
-                db = 'mysite',
-                charset = 'utf8',
-                cursorclass = MySQLdb.cursors.DictCursor
-            )
-
+        con = MySQLdb_con()
         with con:
             cur = con.cursor()
             ip = int(ip2long(ip))
 
-            cur.execute("SELECT COUNT(ip) FROM zufang_topic_like where id=%d;" % int(topic_id))
+            cur.execute("SELECT COUNT(ip) FROM %s where id=%d;" %
+                    (MYSQL_INFO['topic_like_table'], int(topic_id)))
             ver = cur.fetchone()
             result = {
                 'likes': int(ver['COUNT(ip)']),
             }
 
-            cur.execute("SELECT COUNT(*) FROM zufang_topic_like where id=%d AND ip=%d;" % (int(topic_id), ip))
+            cur.execute("SELECT COUNT(*) FROM %s where id=%d AND ip=%d;" %
+                    (MYSQL_INFO['topic_like_table'], int(topic_id), ip))
             ver = cur.fetchone()
             if int(ver['COUNT(*)']) > 0:
                 result['like_success'] = False
             else:
-                cur.execute("INSERT INTO %s (%s, %s) VALUES (%d, %d)" % ('zufang_topic_like', 'id', 'ip', int(topic_id), ip))
+                cur.execute("INSERT INTO %s VALUES (%d, %d)" %
+                        (MYSQL_INFO['topic_like_table'], int(topic_id), ip))
 
                 result['like_success'] = True
                 result['likes'] = result['likes'] + 1
 
-            cur.execute("UPDATE %s SET likes=%d WHERE id=%d" % ('zufang_topic', result['likes'], int(topic_id)))
+            cur.execute("UPDATE %s SET likes=%d WHERE id=%d" %
+                    (MYSQL_INFO['topic_table'], result['likes'], int(topic_id)))
+
         return result
 
 class ZufangAccessCount(APIView):
@@ -129,27 +81,19 @@ class ZufangAccessCount(APIView):
     """
     @json_response
     def get(self, request, format=None):
-        con = MySQLdb.connect(
-                host = MYSQL_INFO['host'],
-                port = 3306,
-                user = MYSQL_INFO['user'],
-                passwd = MYSQL_INFO['passwd'],
-                db = 'mysite',
-                charset = 'utf8',
-                cursorclass = MySQLdb.cursors.DictCursor
-            )
-
         ip = get_client_ip(request)
+        con = MySQLdb_con()
         with con:
             cur = con.cursor()
 
-            cur.execute("SELECT times FROM zufang_access_count WHERE ip=%d" % ip2long(ip))
+            cur.execute("SELECT times FROM %s WHERE ip=%d" %
+                    (MYSQL_INFO['access_count_table'], ip2long(ip)))
             my_times = cur.fetchone()
 
-            cur.execute("SELECT SUM(times) FROM zufang_access_count;")
+            cur.execute("SELECT SUM(times) FROM %s;" % MYSQL_INFO['access_count_table'])
             total_times = cur.fetchone()
 
-            cur.execute("SELECT COUNT(ip) FROM zufang_access_count;")
+            cur.execute("SELECT COUNT(ip) FROM %s;" % MYSQL_INFO['access_count_table'])
             total_visitors = cur.fetchone()
 
             item = {
