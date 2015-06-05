@@ -46,9 +46,8 @@
             <thead>
                 <tr>
                     <th width="65%">Title</th>
-                    <th width="15%">Author</th>
+                    <th width="20%">Author</th>
                     <th width="15%">Last Reply Time</th>
-                    <th width="5%"></th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -58,12 +57,6 @@
         <td><a href="http://www.douban.com/group/topic/<%= id %>/" target=_blank><%- topic_title %></a></td>
         <td><a href="http://www.douban.com/group/people/<%= user_id %>/" target=_blank><%- user_name %></a></td>
         <td><%- reply_time %></td>
-        <td>
-            <span class="like">
-                <span class="glyphicon glyphicon-thumbs-up"></span>
-                <span><%- likes %></span>
-            </span>
-        </td>
     </script>
     <script type="text/template" id="access-count-tmpl">
         <p>Your IP is  <%= ip %>, Total <%= total_visitors %> people <%= total_times %> visits, you visit <%= my_times %> times</p>
