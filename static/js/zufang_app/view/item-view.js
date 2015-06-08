@@ -49,7 +49,7 @@ define([
             var d = new Date(timestamp * 1000),
                 year = d.getFullYear(),
                 month = d.getMonth() + 1,
-                day = d.getDay(),
+                day = d.getDate(),
                 hour = d.getHours(),
                 minute = d.getMinutes();
 
