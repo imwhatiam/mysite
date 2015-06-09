@@ -112,3 +112,36 @@ class ZufangAccessCount(APIView):
             }
 
         return item
+
+class ZufangSearchContent(APIView):
+    """
+    Returns zufang access count.
+    """
+    @json_response
+    def get(self, request, format=None):
+
+        value = request.GET.get('value')
+        con = MySQLdb_con()
+        items = []
+
+        with con:
+            cur = con.cursor()
+
+            cur.execute("SELECT id, title, people_id, timestamp, content \
+                         FROM %s \
+                         WHERE title LIKE '%%%s%%' \
+                         OR content LIKE '%%%s%%'" % (MYSQL_INFO['topic_info_table'], value, value)
+                       )
+
+            rows = cur.fetchall()
+
+            for row in rows:
+                item = {
+                    'id': row["id"],
+                    'topic_title': row["title"],
+                    'timestamp': row["timestamp"],
+                    'content': row["content"],
+                }
+                items.append(item)
+
+        return items

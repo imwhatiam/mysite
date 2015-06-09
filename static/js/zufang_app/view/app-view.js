@@ -16,7 +16,8 @@ define([
         initialize: function() {
             console.log('zufang_app/view/app-view.js: app-view init');
             this.$tableBody = this.$('tbody');
-            this.$accessCount = this.$('#access-count');
+            this.$searchTitle= this.$('#search-submit');
+            this.$searchContent= this.$('#content-search-submit');
 
             this.collection = new Collection();
             this.listenTo(this.collection, 'reset', this.reset);
@@ -26,6 +27,7 @@ define([
 
         events: {
             'click #search-submit': 'inputSearch',
+            'click #content-search-submit': 'inputSearchContent',
             'click #show-all': 'reset',
             'click .direct-search': 'directSearch'
         },
@@ -35,7 +37,7 @@ define([
             $.ajax({
                 url: '/api/zufang-access-count/',
                 success: function(data) {
-                    _this.$accessCount.html(_this.accessCountTemplate(data));
+                    _this.$('#access-count').html(_this.accessCountTemplate(data));
                 }
             });
         },
@@ -51,6 +53,25 @@ define([
 
             if (value !== '') {
                 this.search(value);
+                this.$searchTitle.addClass('hide');
+                this.$searchContent.removeClass('hide');
+            }
+            return false
+        },
+
+        inputSearchContent: function() {
+            var value = $('#search-input').val(),
+                _this = this;
+
+            if (value !== '') {
+                $.ajax({
+                    url: '/api/zufang-search-content/',
+                    data: {value: value},
+                    success: function(data) {
+                        _this.$searchTitle.removeClass('hide');
+                        _this.$searchContent.addClass('hide');
+                    }
+                });
             }
             return false
         },
