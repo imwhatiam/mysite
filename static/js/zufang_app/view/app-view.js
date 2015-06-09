@@ -48,7 +48,10 @@ define([
 
         inputSearch: function() {
             var value = $('#search-input').val();
-            this.search(value);
+
+            if (value !== '') {
+                this.search(value);
+            }
             return false
         },
 
