@@ -16,14 +16,14 @@
     <div id="zufang" class="container">
         <div id="notice">
             <p>创建了一个租房QQ群：463646122，大家可以加进来一起共享信息</p>
-            <p>如果不能搜索，清空浏览器缓存</p>
+            <p>如果不能搜索，清空浏览器缓存。。。优化了搜索结果显示。。。每2小时更新一次</p>
+        </div>
+        <div id="access-count">
+            <p>loading</p>
         </div>
 
         <hr>
 
-        <div id="access-count">
-            <p>loading</p>
-        </div>
 
         <form id="search-topic" class="form-inline">
             <div class="form-group">
@@ -54,7 +54,7 @@
         </table>
     </div>
     <script type="text/template" id="zufang-item-tmpl">
-        <td><a href="http://www.douban.com/group/topic/<%= id %>/" target=_blank><%- topic_title %></a></td>
+        <td><a href="http://www.douban.com/group/topic/<%= id %>/" target=_blank><%= topic_title %></a></td>
         <td><a href="http://www.douban.com/group/people/<%= user_id %>/" target=_blank><%- user_name %></a></td>
         <td><%- reply_time %></td>
     </script>

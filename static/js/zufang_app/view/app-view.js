@@ -65,15 +65,24 @@ define([
 
             this.$tableBody.empty();
 
-            _.each(result, function (item) {
-                _this.addOne(item);
+            _.each(result, function (item, index) {
+                _this.addOne(item, index, value);
             });
 
             return false;
         },
 
-        addOne: function(model) {
-            var view = new Item({model: model});
+        addOne: function(model, index, key_word_or_collection) {
+            if (typeof key_word_or_collection == 'string') {
+                // is search key word
+                var view = new Item({
+                        model: model,
+                        key_word: key_word_or_collection
+                    });
+            } else {
+                var view = new Item({model: model});
+            }
+
             this.$tableBody.append(view.render().el);
         },
 

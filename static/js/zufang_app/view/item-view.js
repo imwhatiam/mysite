@@ -14,7 +14,8 @@ define([
             'click .like': 'like'
         },
 
-        initialize: function() {
+        initialize: function(options) {
+            this.key_word = options.key_word;
             this.listenTo(this.model, "change", this.render);
         },
 
@@ -72,10 +73,24 @@ define([
             return year + '-' + month + '-' + day + ' ' + hour + ':' + minute;
         },
 
+        HTMLescape: function(html) {
+            return document.createElement('div')
+                .appendChild(document.createTextNode(html))
+                .parentNode
+                .innerHTML;
+        },
+
         render: function () {
-            var data = this.model.toJSON();
+            var data = this.model.toJSON(),
+                key_word = this.key_word;
 
             data['reply_time'] = this.getLocalTime(data['timestamp']);
+
+            if (key_word != 'undefined') {
+                if (data['topic_title'].indexOf(key_word) > -1) {
+                    data['topic_title'] = data['topic_title'].replace(key_word, "<span class='highlight'>" + this.HTMLescape(key_word) + "</span>")
+                }
+            }
 
             this.$el.html(this.template(data));
             return this;
