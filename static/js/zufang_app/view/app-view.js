@@ -68,8 +68,14 @@ define([
                     url: '/api/zufang-search-content/',
                     data: {value: value},
                     success: function(data) {
+                        _this.$tableBody.empty();
                         _this.$searchTitle.removeClass('hide');
                         _this.$searchContent.addClass('hide');
+
+                        _.each(data, function (item, index) {
+                            _this.addOne(item, index, value);
+                        });
+
                     }
                 });
             }

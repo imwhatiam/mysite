@@ -29,8 +29,9 @@ class ZufangItems(APIView):
                     'id': row["id"],
                     'topic_title': row["title"],
                     'timestamp': row["timestamp"],
-                    'user_id': row["id"],
+                    'people_id': row["id"],
                     'user_name': row["user_name"],
+                    'content': '',
                     'likes': int(row['likes']),
                 }
                 items.append(item)
@@ -139,6 +140,7 @@ class ZufangSearchContent(APIView):
                 item = {
                     'id': row["id"],
                     'topic_title': row["title"],
+                    'people_id': row["people_id"],
                     'timestamp': row["timestamp"],
                     'content': row["content"],
                 }

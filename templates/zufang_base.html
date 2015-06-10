@@ -55,8 +55,11 @@
         </table>
     </div>
     <script type="text/template" id="zufang-item-tmpl">
-        <td><a href="http://www.douban.com/group/topic/<%= id %>/" target=_blank><%= topic_title %></a></td>
-        <td><a href="http://www.douban.com/group/people/<%= user_id %>/" target=_blank><%- user_name %></a></td>
+        <td>
+            <a href="http://www.douban.com/group/topic/<%= id %>/" target=_blank><%= topic_title %></a>
+            <p><%- content %></p>
+        </td>
+        <td><a href="http://www.douban.com/group/people/<%= people_id %>/" target=_blank><%- user_name %></a></td>
         <td><%- reply_time %></td>
     </script>
     <script type="text/template" id="access-count-tmpl">
