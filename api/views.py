@@ -15,22 +15,23 @@ class ZufangItems(APIView):
         con = MySQLdb_con()
         with con:
             cur = con.cursor()
-
-            cur.execute("SELECT a.id, a.title, a.timestamp, b.id, b.user_name \
-                         FROM %s a, %s b \
-                         WHERE a.id = b.topic_id \
-                         ORDER BY a.timestamp DESC LIMIT 500" %
-                (MYSQL_INFO['topic_table'], MYSQL_INFO['user_table']))
+            cur.execute(
+                        "SELECT id, title, people_id, people_name, timestamp, reply_timestamp, reply_count\
+                         FROM %s \
+                         ORDER BY timestamp DESC LIMIT 500" % MYSQL_INFO['topic_info_table']
+                       )
 
             rows = cur.fetchall()
 
             for row in rows:
                 item = {
                     'id': row["id"],
-                    'topic_title': row["title"],
+                    'title': row["title"],
+                    'people_id': row["people_id"],
+                    'people_name': row["people_name"],
                     'timestamp': row["timestamp"],
-                    'people_id': row["id"],
-                    'user_name': row["user_name"],
+                    'reply_timestamp': row["reply_timestamp"],
+                    'reply_count': row["reply_count"],
                     'content': '',
                 }
                 items.append(item)
@@ -45,40 +46,6 @@ class ZufangItem(APIView):
     def put(self, request, topic_id, format=None):
         pass
 
-#        topic_id = int(topic_id)
-#
-#        ip = get_client_ip(request)
-#        ip_2_long = ip2long(ip)
-#
-#        con = MySQLdb_con()
-#        with con:
-#            cur = con.cursor()
-#
-#            cur.execute("SELECT COUNT(ip) FROM %s where id=%d;" %
-#                    (MYSQL_INFO['topic_like_table'], topic_id))
-#            row = cur.fetchone()
-#            result = {
-#                'likes': int(row['COUNT(ip)']),
-#            }
-#
-#            cur.execute("SELECT COUNT(*) FROM %s where id=%d AND ip=%d;" %
-#                    (MYSQL_INFO['topic_like_table'], topic_id, ip_2_long))
-#            row = cur.fetchone()
-#
-#            if int(row['COUNT(*)']) > 0:
-#                result['like_success'] = False
-#            else:
-#                cur.execute("INSERT INTO %s VALUES (%d, %d)" %
-#                        (MYSQL_INFO['topic_like_table'], topic_id, ip_2_long))
-#
-#                result['like_success'] = True
-#                result['likes'] = result['likes'] + 1
-#
-#            cur.execute("UPDATE %s SET likes=%d WHERE id=%d" %
-#                    (MYSQL_INFO['topic_table'], result['likes'], topic_id))
-#
-#        return result
-#
 class ZufangAccessCount(APIView):
     """
     Returns zufang access count.

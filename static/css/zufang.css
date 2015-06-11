@@ -30,6 +30,11 @@ body {
     padding:0 3px 0 3px;
 }
 
+.glyphicon-circle-arrow-down {
+    margin-left:5px;
+    vertical-align: -1px;
+}
+
 /**** messages ****/
 #messages {
     position:fixed;

@@ -29,7 +29,40 @@ define([
             'click #search-submit': 'inputSearch',
             'click #content-search-submit': 'inputSearchContent',
             'click #show-all': 'reset',
+            'click #create-time-down': 'createTimeDown',
+            'click #reply-count-down': 'replyCountDown',
+            'click #reply-time-down': 'replyTimeDown',
             'click .direct-search': 'directSearch'
+        },
+
+        resortCollection: function() {
+            this.collection.sort();
+            this.$tableBody.empty();
+            this.collection.each(this.addOne, this);
+        },
+
+        createTimeDown: function() {
+            this.collection.comparator = function(model) {
+              return -model.get("timestamp");
+            };
+            this.resortCollection();
+            return false;
+        },
+
+        replyCountDown: function() {
+            this.collection.comparator = function(model) {
+              return -model.get("reply_count");
+            };
+            this.resortCollection();
+            return false;
+        },
+
+        replyTimeDown: function() {
+            this.collection.comparator = function(model) {
+              return -model.get("reply_timestamp");
+            };
+            this.resortCollection();
+            return false;
         },
 
         getAccessCount: function() {
@@ -60,6 +93,7 @@ define([
         },
 
         inputSearchContent: function() {
+            return false
             var value = $('#search-input').val(),
                 _this = this;
 
@@ -87,7 +121,7 @@ define([
                 result = [];
 
             this.collection.each(function (model) {
-                var title = model.get('topic_title');
+                var title = model.get('title');
                 if (title.indexOf(value) > -1) {
                     result.push(model);
                 }

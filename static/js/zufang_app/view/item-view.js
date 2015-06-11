@@ -84,11 +84,17 @@ define([
             var data = this.model.toJSON(),
                 key_word = this.key_word;
 
-            data['reply_time'] = this.getLocalTime(data['timestamp']);
+            data['create_time'] = this.getLocalTime(data['timestamp']);
+
+            if (data['reply_timestamp'] == 0) {
+                data['reply_time'] = '-'
+            } else {
+                data['reply_time'] = this.getLocalTime(data['reply_timestamp']);
+            }
 
             if (key_word != 'undefined') {
-                if (data['topic_title'].indexOf(key_word) > -1) {
-                    data['topic_title'] = data['topic_title'].replace(key_word, "<span class='highlight'>" + this.HTMLescape(key_word) + "</span>")
+                if (data['title'].indexOf(key_word) > -1) {
+                    data['title'] = data['title'].replace(key_word, "<span class='highlight'>" + this.HTMLescape(key_word) + "</span>")
                 }
             }
 

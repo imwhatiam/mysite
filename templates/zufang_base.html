@@ -20,10 +20,6 @@
         <div id="access-count">
             <p>loading</p>
         </div>
-
-        <hr>
-
-
         <form id="search-topic" class="form-inline">
             <div class="form-group">
                 <input id="search-input" class="form-control">
@@ -43,12 +39,16 @@
             <button class="btn btn-info direct-search">西二旗</button>
             <button class="btn btn-info direct-search">回龙观</button>
         </form>
+
+
         <table id="zufang-table" class="table">
             <thead>
                 <tr>
-                    <th width="65%">Title</th>
-                    <th width="20%">Author</th>
-                    <th width="15%">Last Reply Time</th>
+                    <th width="40%">话题</th>
+                    <th width="15%">作者</th>
+                    <th width="18%"> 创建时间<a id="create-time-down" href="#"><span class="glyphicon glyphicon-circle-arrow-down"></span></a></th>
+                    <th width="9%">回应<a id="reply-count-down" href="#"><span class="glyphicon glyphicon-circle-arrow-down"></span></a></th>
+                    <th width="18%">最后回应<a id="reply-time-down" href="#"><span class="glyphicon glyphicon-circle-arrow-down"></span></a></th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -56,10 +56,12 @@
     </div>
     <script type="text/template" id="zufang-item-tmpl">
         <td>
-            <a href="http://www.douban.com/group/topic/<%= id %>/" target=_blank><%= topic_title %></a>
+            <a href="http://www.douban.com/group/topic/<%= id %>/" target=_blank><%= title %></a>
             <p><%- content %></p>
         </td>
-        <td><a href="http://www.douban.com/group/people/<%= people_id %>/" target=_blank><%- user_name %></a></td>
+        <td><a href="http://www.douban.com/group/people/<%= people_id %>/" target=_blank><%- people_name %></a></td>
+        <td><%- create_time %></td>
+        <td><%- reply_count %></td>
         <td><%- reply_time %></td>
     </script>
     <script type="text/template" id="access-count-tmpl">
