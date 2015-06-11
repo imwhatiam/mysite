@@ -15,7 +15,7 @@
 <body>
     <div id="zufang" class="container">
         <div id="notice">
-            <p>创建了一个租房QQ群：463646122，大家可以加进来一起共享信息。。。如果不能搜索，清空浏览器缓存。。。每2小时更新一次</p>
+            <p>创建了一个租房QQ群：463646122，大家可以加进来一起共享信息或拼合租。。如果不能搜索或排序，清空浏览器缓存。。每<span class="refresh-time">4</span>小时更新一次</p>
         </div>
         <div id="access-count">
             <p>loading</p>
@@ -31,13 +31,17 @@
 
             <span class="glyphicon glyphicon-option-vertical"></span>
 
+            <button class="btn btn-info direct-search">西直门</button>
             <button class="btn btn-info direct-search">知春</button>
-            <button class="btn btn-info direct-search">土城</button>
-            <button class="btn btn-info direct-search">牡丹园</button>
             <button class="btn btn-info direct-search">上地</button>
-            <button class="btn btn-info direct-search">龙泽</button>
             <button class="btn btn-info direct-search">西二旗</button>
+            <button class="btn btn-info direct-search">龙泽</button>
             <button class="btn btn-info direct-search">回龙观</button>
+            <button class="btn btn-info direct-search">惠新西街</button>
+            <button class="btn btn-info direct-search">国贸</button>
+            <button class="btn btn-info direct-search">CBD</button>
+            <button class="btn btn-info direct-search">四惠</button>
+            <button class="btn btn-info direct-search">传媒</button>
         </form>
 
 
@@ -65,7 +69,7 @@
         <td><%- reply_time %></td>
     </script>
     <script type="text/template" id="access-count-tmpl">
-        <p>Your IP is  <%= ip %>, Total <%= total_visitors %> people <%= total_times %> visits, you visit <%= my_times %> times</p>
+        <p>Your IP is  <%= ip %>, Total <%= total_visitors %> people <%= total_times %> visits, you visit <%= my_times %> times.</p>
     </script>
     <script data-main="{% static "js/main" %}" src="{% static "js/lib/require.js" %}"></script>
 </body>

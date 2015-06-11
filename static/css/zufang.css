@@ -31,13 +31,19 @@ body {
 }
 
 .glyphicon-circle-arrow-down {
-    margin-left:5px;
+    margin-left: 5px;
     vertical-align: -1px;
+}
+.refresh-time {
+    color: red;
+    font-weight: bold;
+    padding-left: 3px;
+    padding-right: 3px;
 }
 
 /**** messages ****/
 #messages {
-    position:fixed;
+    position: fixed;
     border-radius: 2px;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
