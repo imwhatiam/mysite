@@ -18,7 +18,7 @@ class ZufangItems(APIView):
             cur.execute(
                         "SELECT id, title, people_id, people_name, timestamp, reply_timestamp, reply_count\
                          FROM %s \
-                         ORDER BY timestamp DESC LIMIT 500" % MYSQL_INFO['topic_info_table']
+                         ORDER BY timestamp DESC LIMIT 500" % MYSQL_INFO['topic_table']
                        )
 
             rows = cur.fetchall()
