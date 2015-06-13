@@ -16,7 +16,8 @@ define([
         initialize: function() {
             console.log('zufang_app/view/app-view.js: app-view init');
             this.$tableBody = this.$('tbody');
-            this.$accessCount = this.$('#access-count');
+            this.$searchTitle= this.$('#search-submit');
+            this.$searchContent= this.$('#content-search-submit');
 
             this.collection = new Collection();
             this.listenTo(this.collection, 'reset', this.reset);
@@ -26,8 +27,42 @@ define([
 
         events: {
             'click #search-submit': 'inputSearch',
+            'click #content-search-submit': 'inputSearchContent',
             'click #show-all': 'reset',
+            'click #create-time-down': 'createTimeDown',
+            'click #reply-count-down': 'replyCountDown',
+            'click #reply-time-down': 'replyTimeDown',
             'click .direct-search': 'directSearch'
+        },
+
+        resortCollection: function() {
+            this.collection.sort();
+            this.$tableBody.empty();
+            this.collection.each(this.addOne, this);
+        },
+
+        createTimeDown: function() {
+            this.collection.comparator = function(model) {
+              return -model.get("timestamp");
+            };
+            this.resortCollection();
+            return false;
+        },
+
+        replyCountDown: function() {
+            this.collection.comparator = function(model) {
+              return -model.get("reply_count");
+            };
+            this.resortCollection();
+            return false;
+        },
+
+        replyTimeDown: function() {
+            this.collection.comparator = function(model) {
+              return -model.get("reply_timestamp");
+            };
+            this.resortCollection();
+            return false;
         },
 
         getAccessCount: function() {
@@ -35,7 +70,7 @@ define([
             $.ajax({
                 url: '/api/zufang-access-count/',
                 success: function(data) {
-                    _this.$accessCount.html(_this.accessCountTemplate(data));
+                    _this.$('#access-count').html(_this.accessCountTemplate(data));
                 }
             });
         },
@@ -51,6 +86,32 @@ define([
 
             if (value !== '') {
                 this.search(value);
+                this.$searchTitle.addClass('hide');
+                this.$searchContent.removeClass('hide');
+            }
+            return false
+        },
+
+        inputSearchContent: function() {
+            return false
+            var value = $('#search-input').val(),
+                _this = this;
+
+            if (value !== '') {
+                $.ajax({
+                    url: '/api/zufang-search-content/',
+                    data: {value: value},
+                    success: function(data) {
+                        _this.$tableBody.empty();
+                        _this.$searchTitle.removeClass('hide');
+                        _this.$searchContent.addClass('hide');
+
+                        _.each(data, function (item, index) {
+                            _this.addOne(item, index, value);
+                        });
+
+                    }
+                });
             }
             return false
         },
@@ -60,7 +121,7 @@ define([
                 result = [];
 
             this.collection.each(function (model) {
-                var title = model.get('topic_title');
+                var title = model.get('title');
                 if (title.indexOf(value) > -1) {
                     result.push(model);
                 }

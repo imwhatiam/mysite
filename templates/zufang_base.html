@@ -15,51 +15,60 @@
 <body>
     <div id="zufang" class="container">
         <div id="notice">
-            <p>创建了一个租房QQ群：463646122，大家可以加进来一起共享信息</p>
-            <p>如果不能搜索，清空浏览器缓存。。。每2小时更新一次</p>
+            <p>创建了一个租房QQ群：<strong>463646122</strong>，大家可以加进来一起<strong> 共享信息 </strong>或<strong> 拼合租 </strong>。。如果不能搜索或排序，<strong>清空浏览器缓存</strong>。。<span class="refresh-time">每天</span>更新一次</p>
         </div>
         <div id="access-count">
             <p>loading</p>
         </div>
-
-        <hr>
-
-
         <form id="search-topic" class="form-inline">
             <div class="form-group">
                 <input id="search-input" class="form-control">
             </div>
-            <button id="search-submit" class="btn btn-info">Search</button>
+            <button id="search-submit" class="btn btn-info">搜标题</button>
+            <button id="content-search-submit" class="btn btn-info hide">搜正文</button>
+
             <button id="show-all" class="btn btn-success">Show All</button>
 
             <span class="glyphicon glyphicon-option-vertical"></span>
 
+            <button class="btn btn-info direct-search">西直门</button>
             <button class="btn btn-info direct-search">知春</button>
-            <button class="btn btn-info direct-search">土城</button>
-            <button class="btn btn-info direct-search">牡丹园</button>
             <button class="btn btn-info direct-search">上地</button>
-            <button class="btn btn-info direct-search">龙泽</button>
             <button class="btn btn-info direct-search">西二旗</button>
+            <button class="btn btn-info direct-search">龙泽</button>
             <button class="btn btn-info direct-search">回龙观</button>
+            <button class="btn btn-info direct-search">惠新西街</button>
+            <button class="btn btn-info direct-search">国贸</button>
+            <button class="btn btn-info direct-search">CBD</button>
+            <button class="btn btn-info direct-search">四惠</button>
+            <button class="btn btn-info direct-search">传媒</button>
         </form>
+
+
         <table id="zufang-table" class="table">
             <thead>
                 <tr>
-                    <th width="65%">Title</th>
-                    <th width="20%">Author</th>
-                    <th width="15%">Last Reply Time</th>
+                    <th width="40%">话题</th>
+                    <th width="15%">作者</th>
+                    <th width="18%"> 创建时间<a id="create-time-down" href="#"><span class="glyphicon glyphicon-circle-arrow-down"></span></a></th>
+                    <th width="9%">回应<a id="reply-count-down" href="#"><span class="glyphicon glyphicon-circle-arrow-down"></span></a></th>
+                    <th width="18%">最后回应<a id="reply-time-down" href="#"><span class="glyphicon glyphicon-circle-arrow-down"></span></a></th>
                 </tr>
             </thead>
             <tbody></tbody>
         </table>
     </div>
     <script type="text/template" id="zufang-item-tmpl">
-        <td><a href="http://www.douban.com/group/topic/<%= id %>/" target=_blank><%= topic_title %></a></td>
-        <td><a href="http://www.douban.com/group/people/<%= user_id %>/" target=_blank><%- user_name %></a></td>
+        <td>
+            <a href="http://www.douban.com/group/topic/<%= id %>/" target=_blank><%= title %></a>
+        </td>
+        <td><a href="http://www.douban.com/group/people/<%= people_id %>/" target=_blank><%- people_name %></a></td>
+        <td><%- create_time %></td>
+        <td><%- reply_count %></td>
         <td><%- reply_time %></td>
     </script>
     <script type="text/template" id="access-count-tmpl">
-        <p>Your IP is  <%= ip %>, Total <%= total_visitors %> people <%= total_times %> visits, you visit <%= my_times %> times</p>
+        <p>Your IP is  <%= ip %>, Total <%= total_visitors %> people <%= total_times %> visits, you visit <%= my_times %> times.</p>
     </script>
     <script data-main="{% static "js/main" %}" src="{% static "js/lib/require.js" %}"></script>
 </body>
