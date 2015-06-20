@@ -34,7 +34,7 @@ body {
     margin-left: 5px;
     vertical-align: -1px;
 }
-.refresh-time {
+.red-span {
     color: red;
     font-weight: bold;
     padding-left: 3px;
