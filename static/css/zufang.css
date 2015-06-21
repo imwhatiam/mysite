@@ -40,6 +40,9 @@ body {
     padding-left: 3px;
     padding-right: 3px;
 }
+.jyjx {
+    font-size:large;
+}
 
 /**** messages ****/
 #messages {

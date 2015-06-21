@@ -24,3 +24,7 @@ def zufang(request):
 
     return render_to_response('zufang_base.html', {'notice': NOTICE
         }, context_instance=RequestContext(request))
+
+def zufang_jyjx(request):
+
+    return render_to_response('zufang_jyjx.html', {}, context_instance=RequestContext(request))
