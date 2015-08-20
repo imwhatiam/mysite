@@ -1,5 +1,7 @@
 from rest_framework.views import APIView
 
+from django.core.cache import cache
+
 from mysite.utils import get_client_ip, ip2long, json_response, \
         MySQLdb_con
 from mysite.settings import MYSQL_INFO
@@ -11,30 +13,34 @@ class ZufangItems(APIView):
     @json_response
     def get(self, request, format=None):
 
-        items = []
-        con = MySQLdb_con()
-        with con:
-            cur = con.cursor()
-            cur.execute(
-                        "SELECT id, title, people_id, people_name, timestamp, reply_timestamp, reply_count\
-                         FROM %s \
-                         ORDER BY timestamp DESC LIMIT 500" % MYSQL_INFO['topic_table']
-                       )
+        items = cache.get('zufang_items')
+        if not items:
+            items = []
+            con = MySQLdb_con()
+            with con:
+                cur = con.cursor()
+                cur.execute(
+                            "SELECT id, title, people_id, people_name, timestamp, reply_timestamp, reply_count\
+                             FROM %s \
+                             ORDER BY timestamp DESC LIMIT 500" % MYSQL_INFO['topic_table']
+                           )
 
-            rows = cur.fetchall()
+                rows = cur.fetchall()
 
-            for row in rows:
-                item = {
-                    'id': row["id"],
-                    'title': row["title"],
-                    'people_id': row["people_id"],
-                    'people_name': row["people_name"],
-                    'timestamp': row["timestamp"],
-                    'reply_timestamp': row["reply_timestamp"],
-                    'reply_count': row["reply_count"],
-                    'content': '',
-                }
-                items.append(item)
+                for row in rows:
+                    item = {
+                        'id': row["id"],
+                        'title': row["title"],
+                        'people_id': row["people_id"],
+                        'people_name': row["people_name"],
+                        'timestamp': row["timestamp"],
+                        'reply_timestamp': row["reply_timestamp"],
+                        'reply_count': row["reply_count"],
+                        'content': '',
+                    }
+                    items.append(item)
+
+            cache.set('zufang_items', items, 6 * 30 * 30)
 
         return items
 
