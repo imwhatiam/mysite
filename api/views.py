@@ -40,7 +40,7 @@ class ZufangItems(APIView):
                     }
                     items.append(item)
 
-            cache.set('zufang_items', items, 6 * 30 * 30)
+            cache.set('zufang_items', items, 6 * 60 * 60)
 
         return items
 

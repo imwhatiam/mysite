@@ -71,7 +71,12 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
-
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/tmp/mysite_cache',
+    }
+}
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
