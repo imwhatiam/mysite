@@ -27,7 +27,6 @@ define([
 
         events: {
             'click #search-submit': 'inputSearch',
-            'click #content-search-submit': 'inputSearchContent',
             'click #show-all': 'reset',
             'click #create-time-down': 'createTimeDown',
             'click #reply-count-down': 'replyCountDown',
@@ -86,32 +85,6 @@ define([
 
             if (value !== '') {
                 this.search(value);
-                this.$searchTitle.addClass('hide');
-                this.$searchContent.removeClass('hide');
-            }
-            return false
-        },
-
-        inputSearchContent: function() {
-            return false
-            var value = $('#search-input').val(),
-                _this = this;
-
-            if (value !== '') {
-                $.ajax({
-                    url: '/api/zufang-search-content/',
-                    data: {value: value},
-                    success: function(data) {
-                        _this.$tableBody.empty();
-                        _this.$searchTitle.removeClass('hide');
-                        _this.$searchContent.addClass('hide');
-
-                        _.each(data, function (item, index) {
-                            _this.addOne(item, index, value);
-                        });
-
-                    }
-                });
             }
             return false
         },
