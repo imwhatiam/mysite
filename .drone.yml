@@ -1,0 +1,16 @@
+kind: pipeline
+name: default
+
+steps:
+- name: build
+  image: ubuntu
+  commands:
+  - echo $(GITHUB_PERSONAL_ACCESS_TOKEN)
+  - echo $GITHUB_PERSONAL_ACCESS_TOKEN
+  - echo GITHUB_PERSONAL_ACCESS_TOKEN
+  - apt-get -yq update
+  - apt-get -yq  install git
+  - echo 'push dist to seahub'
+  - git remote add token-origin https://imwhatiam:$GITHUB_PERSONAL_ACCESS_TOKEN@github.com/haiwen/seahub.git
+  - git push -f token-origin dist-lian-test
+
